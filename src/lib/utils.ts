@@ -21,8 +21,8 @@ export function getMonth(month = dayjs().month(), year = dayjs().year()) {
 const deserializeDate = (dateString: string) => dayjs(dateString);
 
 export const deserializeMonth = (month: string[][]) => {
-  return month.map((week: any) =>
-    week.map((dayString: any) => deserializeDate(dayString))
+  return month.map((week: string[]) =>
+    week.map((dayString: string) => deserializeDate(dayString))
   );
 };
 
