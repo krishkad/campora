@@ -1,3 +1,4 @@
+"use client"
 import Image from 'next/image';
 import React from 'react'
 import BookingBox from './booking-box';
@@ -11,6 +12,7 @@ const Hero = () => {
                 height={0}
                 className='w-full h-full object-cover select-none pointer-events-none'
                 unoptimized
+                priority
                 alt='hero-images'
             />
             <div className="absolute inset-0 size-full bg-black opacity-45" />
