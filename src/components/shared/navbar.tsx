@@ -3,7 +3,7 @@ import { NAVLINKS } from '@/constants/index.c';
 import Link from 'next/link';
 import { Button } from '../ui/button';
 import Logo from './logo';
-import { AlignCenter, AlignJustify, ArrowRight } from 'lucide-react';
+import { AlignJustify, ArrowRight } from 'lucide-react';
 
 const Navbar = () => {
     return (
