@@ -1,57 +1,100 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { format } from "date-fns"
-import { Calendar as CalendarIcon } from "lucide-react"
-
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import { Calendar } from "@/components/ui/calendar"
+import React, { useEffect, useState } from 'react'
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
+import dayjs from 'dayjs';
+import { cn, deserializeMonth, excludeDisabledWeek, getCurrentDay, getMonth } from '@/lib/utils';
+import { Calendar1Icon, ChevronLeft, ChevronRight } from 'lucide-react';
+import { dayHeader } from '@/constants/index.c';
+import { Button, buttonVariants } from '../ui/button';
 
-export default function DatePicker({
-  defaultDate
-}: {
-  defaultDate?: Date
-}) {
-  const [date, setDate] = React.useState<Date | undefined>(
-    defaultDate ? defaultDate : new Date(new Date())
-  )
+const SmallCalendar = ({ defaultDate }: { defaultDate?: number }) => {
 
-  React.useEffect(() => {
-    if (!defaultDate) return;
-    setDate(defaultDate)
-  }, [defaultDate])
+  // const monthAppSelector = useAppSelector((state) => state.calendar.month);
+  // const monthNumber = useAppSelector((state) => state.calendar.monthNumber);
+  // const smallCalendar = useAppSelector((state) => state.calendar.smallCalendar);
+  // const smallCalendarMonthNumber = useAppSelector((state) => state.calendar.smallCalendarMonthNumber);
 
 
-  console.log(date)
+  const [month, setMonth] = useState<string[][]>(getMonth());
+  const [monthNumber, setMonthNumber] = useState<number>(1);
+  const output_month: any = deserializeMonth(month);
+
+
+  useEffect(() => {
+    // dispatch(changeSmallCalendarMonthNumber(monthNumber));
+    // dispatch(changeSmallCalendar(getMonth(monthNumber)));
+    setMonthNumber(new Date().getMonth());
+    setMonth(getMonth());
+}, [])
+
+
+
 
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button
-          variant={"outline"}
-          className={cn(
-            "w-full justify-start text-left font-normal rounded-full",
-            !date && "text-muted-foreground"
-          )}
+        <p
+          className={cn('rounded-full', buttonVariants({variant: "outline"}))}
         >
-          <CalendarIcon className="mr-2 h-4 w-4" />
-          {date ? format(date, "MMM d yyyy") : <span>Pick a date</span>}
-        </Button>
+          <Calendar1Icon className='w-4 h-4 shrink-0 inline mr-0.5' />
+          {dayjs(new Date(dayjs().year(), monthNumber, dayjs().date())).format('DD MMM YYYY')}
+        </p>
       </PopoverTrigger>
-      <PopoverContent className="w-auto p-0">
-        <Calendar
-          mode="single"
-          selected={date}
-          onSelect={typeof date === undefined ? () => { } : setDate}
-          initialFocus
-        />
+      <PopoverContent className="w-max border-border p-2">
+        <div className="space-y-2">
+          <div className="flex justify-between items-center">
+            <Button size={'icon'} variant={'outline'} onClick={() => {
+              setMonthNumber((prev) => prev - 1)
+              setMonth(getMonth(monthNumber - 1))
+            }}>
+              <ChevronLeft className='w-4 h-4' />
+            </Button>
+            <div className="flex justify-center items-center gap-2">
+              <p className="text-sm font-medium">{dayjs(new Date(dayjs().year(), monthNumber, dayjs().date())).format("DD MMM YYYY")}</p>
+              {/* <p className="text-sm font-semibold"></p> */}
+            </div>
+            <Button size={'icon'} variant={'outline'} onClick={() => {
+              setMonthNumber((prev) => prev + 1)
+              setMonth(getMonth(monthNumber + 1))
+            }}>
+              <ChevronRight className='w-4 h-4' />
+            </Button>
+          </div>
+          <div className={cn("", excludeDisabledWeek(output_month)?.lastRow ? "grid grid-cols-7 grid-rows-7 gap-0.5 " : "grid grid-cols-7 grid-rows-6 gap-0.5 ")}>
+            {dayHeader.map((day, i) => {
+              return <div className="aspect-square w-8 bg-secondary flex items-center justify-center text-xs font-medium rounded-md" key={i}>
+                {day.Label.slice(0, 1)}
+              </div>
+            })}
+            {excludeDisabledWeek(output_month)?.month.map((row: any, i: number) => {
+              return row.map((day: any, i: number) => {
+                return <Button
+                  variant={'ghost'}
+                  className={cn("aspect-square w-8 h-8 hover:bg-secondary flex items-center justify-center text-xs font-medium rounded-md", getCurrentDay(day) && 'bg-secondary')}
+                  key={i}
+                  disabled={
+                    new Date(day).getMonth() > new Date(dayjs().year(), monthNumber).getMonth() || new Date(day).getMonth() < new Date(dayjs().year(), monthNumber).getMonth()
+                  }
+                  onClick={() => {
+                    // dispatch(changeMonthNumber(smallCalendarMonthNumber));
+                    // dispatch(changeMonth(getMonth(smallCalendarMonthNumber)));
+
+                  }}
+                >
+                  {day.format('D')}
+                </Button>
+              })
+            })}
+          </div>
+        </div>
       </PopoverContent>
     </Popover>
-  )
-}
+  );
+};
+
+export default SmallCalendar;
