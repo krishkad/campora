@@ -6,13 +6,13 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
-import dayjs from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
 import { cn, deserializeMonth, excludeDisabledWeek, getCurrentDay, getMonth } from '@/lib/utils';
 import { Calendar1Icon, ChevronLeft, ChevronRight } from 'lucide-react';
 import { dayHeader } from '@/constants/index.c';
 import { Button, buttonVariants } from '../ui/button';
 
-const SmallCalendar = ({ defaultDate }: { defaultDate?: number }) => {
+const SmallCalendar = ({ }: { defaultDate?: number }) => {
 
   // const monthAppSelector = useAppSelector((state) => state.calendar.month);
   // const monthNumber = useAppSelector((state) => state.calendar.monthNumber);
@@ -22,7 +22,7 @@ const SmallCalendar = ({ defaultDate }: { defaultDate?: number }) => {
 
   const [month, setMonth] = useState<string[][]>(getMonth());
   const [monthNumber, setMonthNumber] = useState<number>(1);
-  const output_month: any = deserializeMonth(month);
+  const output_month = deserializeMonth(month);
 
 
   useEffect(() => {
@@ -30,7 +30,7 @@ const SmallCalendar = ({ defaultDate }: { defaultDate?: number }) => {
     // dispatch(changeSmallCalendar(getMonth(monthNumber)));
     setMonthNumber(new Date().getMonth());
     setMonth(getMonth());
-}, [])
+  }, [])
 
 
 
@@ -39,7 +39,7 @@ const SmallCalendar = ({ defaultDate }: { defaultDate?: number }) => {
     <Popover>
       <PopoverTrigger asChild>
         <p
-          className={cn('rounded-full', buttonVariants({variant: "outline"}))}
+          className={cn('rounded-full', buttonVariants({ variant: "outline" }))}
         >
           <Calendar1Icon className='w-4 h-4 shrink-0 inline mr-0.5' />
           {dayjs(new Date(dayjs().year(), monthNumber, dayjs().date())).format('DD MMM YYYY')}
@@ -71,14 +71,14 @@ const SmallCalendar = ({ defaultDate }: { defaultDate?: number }) => {
                 {day.Label.slice(0, 1)}
               </div>
             })}
-            {excludeDisabledWeek(output_month)?.month.map((row: any, i: number) => {
-              return row.map((day: any, i: number) => {
+            {excludeDisabledWeek(output_month)?.month.map((row: Dayjs[]) => {
+              return row.map((day: Dayjs, i: number) => {
                 return <Button
                   variant={'ghost'}
                   className={cn("aspect-square w-8 h-8 hover:bg-secondary flex items-center justify-center text-xs font-medium rounded-md", getCurrentDay(day) && 'bg-secondary')}
                   key={i}
                   disabled={
-                    new Date(day).getMonth() > new Date(dayjs().year(), monthNumber).getMonth() || new Date(day).getMonth() < new Date(dayjs().year(), monthNumber).getMonth()
+                    new Date(day.toISOString()).getMonth() > new Date(dayjs().year(), monthNumber).getMonth() || new Date(day.toISOString()).getMonth() < new Date(dayjs().year(), monthNumber).getMonth()
                   }
                   onClick={() => {
                     // dispatch(changeMonthNumber(smallCalendarMonthNumber));

@@ -1,5 +1,5 @@
 import { clsx, type ClassValue } from "clsx"
-import dayjs from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 import { twMerge } from "tailwind-merge"
 
 export function cn(...inputs: ClassValue[]) {
@@ -20,15 +20,15 @@ export function getMonth(month = dayjs().month(), year = dayjs().year()) {
 
 const deserializeDate = (dateString: string) => dayjs(dateString);
 
-export const deserializeMonth = (month: any) => {
+export const deserializeMonth = (month: string[][]) => {
   return month.map((week: any) =>
     week.map((dayString: any) => deserializeDate(dayString))
   );
 };
 
-export function excludeDisabledWeek(month: any) {
+export function excludeDisabledWeek(month: Dayjs[][]) {
   const lastWeek = month.slice(5)[0]
-  const lastRow = lastWeek.find((date: any) => { return date.date() > 18 })
+  const lastRow = lastWeek.find((date: Dayjs) => { return date.date() > 18 })
   if (!lastRow) {
     return { month: month.slice(0, 5), lastRow: false };
   }
@@ -47,12 +47,12 @@ export function getDayHours(day = dayjs().date(), month = dayjs().month(), year 
   return hourMatrix;
 };
 
-export function deserializeDayHours(hourMatrix: any) {
+export function deserializeDayHours(hourMatrix: string[][]) {
   return hourMatrix[0].map((isoString: string) => {
     return dayjs(isoString).format('HH:mm');
   });
 };
 
-export function getCurrentDay(day: any) {
+export function getCurrentDay(day: Dayjs) {
   return day.format('DD-MM-YYYY') === dayjs().format('DD-MM-YYYY');
 };
