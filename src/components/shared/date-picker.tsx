@@ -39,7 +39,7 @@ const SmallCalendar = ({ }: { defaultDate?: number }) => {
     <Popover>
       <PopoverTrigger asChild>
         <p
-          className={cn('rounded-full', buttonVariants({ variant: "outline" }))}
+          className={cn( buttonVariants({ variant: "outline" }), "rounded-full cursor-pointer w-full")}
         >
           <Calendar1Icon className='w-4 h-4 shrink-0 inline mr-0.5' />
           {dayjs(new Date(dayjs().year(), monthNumber, dayjs().date())).format('DD MMM YYYY')}
