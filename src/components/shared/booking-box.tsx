@@ -34,7 +34,7 @@ const BookingBox = () => {
                 </Select>
                 <Button className='w-full rounded-full'>
                     Check Availability
-                    <ArrowRight className='w-4 h-4 inline ml-.5' />
+                    <ArrowRight className='w-4 h-4 inline ml-0.5' />
                 </Button>
             </div>
         </div>
