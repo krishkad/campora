@@ -15,10 +15,10 @@ import dayjs from 'dayjs';
 
 const BookingBox = () => {
     return (
-        <div className="absolute -bottom-16 md:-bottom-8 inset-x-0 max-w-4xl mx-auto px-5">
+        <div className="absolute -bottom-16 md:-bottom-8 inset-x-0 max-w-4xl mx-auto px-5 z-20 ">
 
             <div
-                className=" bg-white rounded-3xl md:rounded-full h-32 md:h-16 p-4 grid grid-cols-2 md:flex md:items-center md:justify-bwtween gap-5"
+                className=" bg-white rounded-3xl md:rounded-full h-32 md:h-16 p-4 grid grid-cols-2 md:flex md:items-center md:justify-bwtween gap-5 border"
             >
                 <DatePicker />
                 <DatePicker defaultDate={dayjs().month()} />

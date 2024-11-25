@@ -14,10 +14,7 @@ import { Button, buttonVariants } from '../ui/button';
 
 const SmallCalendar = ({ }: { defaultDate?: number }) => {
 
-  // const monthAppSelector = useAppSelector((state) => state.calendar.month);
-  // const monthNumber = useAppSelector((state) => state.calendar.monthNumber);
-  // const smallCalendar = useAppSelector((state) => state.calendar.smallCalendar);
-  // const smallCalendarMonthNumber = useAppSelector((state) => state.calendar.smallCalendarMonthNumber);
+
 
 
   const [month, setMonth] = useState<string[][]>(getMonth());
@@ -26,8 +23,6 @@ const SmallCalendar = ({ }: { defaultDate?: number }) => {
 
 
   useEffect(() => {
-    // dispatch(changeSmallCalendarMonthNumber(monthNumber));
-    // dispatch(changeSmallCalendar(getMonth(monthNumber)));
     setMonthNumber(new Date().getMonth());
     setMonth(getMonth());
   }, [])
