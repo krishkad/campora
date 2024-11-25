@@ -70,7 +70,7 @@ const SmallCalendar = ({ }: { defaultDate?: number }) => {
               return row.map((day: Dayjs, i: number) => {
                 return <Button
                   variant={'ghost'}
-                  className={cn("aspect-square w-8 h-8 hover:bg-secondary flex items-center justify-center text-xs font-medium rounded-md", getCurrentDay(day) && 'bg-secondary')}
+                  className={cn("aspect-square w-8 h-8 hover:bg-secondary flex items-center justify-center text-xs font-medium rounded-md", getCurrentDay(day) && 'bg-primary text-white')}
                   key={i}
                   disabled={
                     new Date(day.toISOString()).getMonth() > new Date(dayjs().year(), monthNumber).getMonth() || new Date(day.toISOString()).getMonth() < new Date(dayjs().year(), monthNumber).getMonth()

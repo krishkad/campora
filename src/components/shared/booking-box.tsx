@@ -27,9 +27,9 @@ const BookingBox = () => {
                         <SelectValue placeholder="2" />
                     </SelectTrigger>
                     <SelectContent>
-                        <SelectItem value="1" className='w-max'>1</SelectItem>
-                        <SelectItem value="2" className='w-max'>2</SelectItem>
-                        <SelectItem value="3" className='w-max'>3</SelectItem>
+                        <SelectItem value="1" className='w-full'>1</SelectItem>
+                        <SelectItem value="2" className='w-full'>2</SelectItem>
+                        <SelectItem value="3" className='w-full'>3</SelectItem>
                     </SelectContent>
                 </Select>
                 <Button className='w-full rounded-full'>

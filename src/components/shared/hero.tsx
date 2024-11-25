@@ -5,7 +5,7 @@ import BookingBox from './booking-box';
 
 const Hero = () => {
     return (
-        <div className='relative w-full h-dvh'>
+        <div className='relative w-full h-svh'>
             <Image
                 src={'/images/hero/hero-2-reduced.jpg'}
                 width={0}
